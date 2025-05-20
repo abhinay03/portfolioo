@@ -6,8 +6,20 @@ import { motion } from "framer-motion";
 export default function CustomCursor() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
+    // Check if device is mobile
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768); // 768px is typical tablet/mobile breakpoint
+    };
+
+    // Initial check
+    checkMobile();
+
+    // Add resize listener
+    window.addEventListener("resize", checkMobile);
+
     const handleMouseMove = (e: MouseEvent) => {
       setMousePosition({ x: e.clientX, y: e.clientY });
     };
@@ -20,25 +32,37 @@ export default function CustomCursor() {
       setIsHovering(false);
     };
 
-    // Add event listeners for links and buttons
-    const interactiveElements = document.querySelectorAll(
-      "a, button, [role='button']"
-    );
-    interactiveElements.forEach((element) => {
-      element.addEventListener("mouseenter", handleMouseEnter);
-      element.addEventListener("mouseleave", handleMouseLeave);
-    });
+    // Only add mouse event listeners if not mobile
+    if (!isMobile) {
+      // Add event listeners for links and buttons
+      const interactiveElements = document.querySelectorAll(
+        "a, button, [role='button']"
+      );
+      interactiveElements.forEach((element) => {
+        element.addEventListener("mouseenter", handleMouseEnter);
+        element.addEventListener("mouseleave", handleMouseLeave);
+      });
 
-    window.addEventListener("mousemove", handleMouseMove);
+      window.addEventListener("mousemove", handleMouseMove);
+    }
 
     return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-      interactiveElements.forEach((element) => {
-        element.removeEventListener("mouseenter", handleMouseEnter);
-        element.removeEventListener("mouseleave", handleMouseLeave);
-      });
+      window.removeEventListener("resize", checkMobile);
+      if (!isMobile) {
+        window.removeEventListener("mousemove", handleMouseMove);
+        const interactiveElements = document.querySelectorAll(
+          "a, button, [role='button']"
+        );
+        interactiveElements.forEach((element) => {
+          element.removeEventListener("mouseenter", handleMouseEnter);
+          element.removeEventListener("mouseleave", handleMouseLeave);
+        });
+      }
     };
-  }, []);
+  }, [isMobile]);
+
+  // Don't render cursor on mobile devices
+  if (isMobile) return null;
 
   return (
     <>
