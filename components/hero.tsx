@@ -27,7 +27,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="text-center lg:text-left"
+            className="text-center lg:text-left order-2 lg:order-1"
           >
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-4">
               <motion.span
@@ -119,13 +119,13 @@ export default function Hero() {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="hidden lg:block"
+            className="order-1 lg:order-2 flex justify-center lg:justify-end"
           >
-            <div className="relative">
+            <div className="relative w-48 h-48 sm:w-64 sm:h-64 lg:w-[400px] lg:h-[400px] xl:w-[500px] xl:h-[500px]">
               <div className="absolute -inset-0.5 bg-gradient-to-r from-primary to-primary/50 rounded-lg blur opacity-30"></div>
               <div className="relative bg-card rounded-lg shadow-xl overflow-hidden aspect-square">
                 <img
-                  src="/abhinay.jpg?height=600&width=600"
+                  src="/abhinay.jpg?height=800&width=800"
                   alt="Profile"
                   className="w-full h-full object-cover"
                 />

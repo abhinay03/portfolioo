@@ -25,7 +25,7 @@ export default function Projects() {
       title: "MannMitra",
       description:
         "A comprehensive mental health assessment website designed to provide accessible mental health resources and self-assessment tools.",
-      image: "/placeholder.svg?height=400&width=600",
+      image: "/mm.jpg?height=400&width=600",
       icon: Brain,
       tags: ["React", "Node.js", "MongoDB", "Express", "Mental Health"],
       demoLink: "https://mannmitra.live",
@@ -107,7 +107,7 @@ export default function Projects() {
                   <div className="relative aspect-video overflow-hidden">
                     <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent z-10"></div>
                     <img
-                      src={project.image || "/placeholder.svg"}
+                      src={project.image || "/mm.jpg"}
                       alt={project.title}
                       className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
                     />
