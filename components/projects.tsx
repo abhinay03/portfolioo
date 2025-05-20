@@ -25,7 +25,7 @@ export default function Projects() {
       title: "MannMitra",
       description:
         "A comprehensive mental health assessment website designed to provide accessible mental health resources and self-assessment tools.",
-      image: "/placeholder.svg?height=400&width=600",
+      image: "/mm.jpg?height=400&width=600",
       icon: Brain,
       tags: ["React", "Node.js", "MongoDB", "Express", "Mental Health"],
       demoLink: "https://mannmitra.live",
