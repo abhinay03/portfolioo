@@ -8,9 +8,13 @@ import ResumeButton from "@/components/resume-button";
 
 export default function Hero() {
   const [mounted, setMounted] = useState(false);
+  const [activeSection, setActiveSection] = useState("home");
 
   useEffect(() => {
     setMounted(true);
+    if (window.scrollY < 100) {
+      setActiveSection("home");
+    }
   }, []);
 
   if (!mounted) return null;

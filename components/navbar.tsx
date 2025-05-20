@@ -14,11 +14,6 @@ export default function Navbar() {
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 10);
-
-      // Check if we're at the top of the page
-      if (window.scrollY < 100) {
-        setActiveSection("home");
-      }
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
@@ -27,7 +22,7 @@ export default function Navbar() {
   useEffect(() => {
     const observerOptions = {
       root: null,
-      rootMargin: "-10% 0px -90% 0px",
+      rootMargin: "0px",
       threshold: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0],
     };
 
@@ -35,10 +30,7 @@ export default function Navbar() {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           const id = entry.target.id;
-          // Only update if we're not at the top of the page
-          if (window.scrollY > 100) {
-            setActiveSection(id);
-          }
+          setActiveSection(id);
         }
       });
     };
@@ -48,11 +40,29 @@ export default function Navbar() {
       observerOptions
     );
 
-    // Observe all sections except home
-    const sections = document.querySelectorAll("section[id]:not(#home)");
+    // Observe all sections
+    const sections = document.querySelectorAll("section[id]");
     sections.forEach((section) => observer.observe(section));
 
-    return () => observer.disconnect();
+    // Set initial active section based on scroll position
+    const handleInitialSection = () => {
+      const scrollPosition = window.scrollY;
+      const homeSection = document.getElementById("home");
+      if (homeSection && scrollPosition < homeSection.offsetHeight / 2) {
+        setActiveSection("home");
+      }
+    };
+
+    // Check initial section on mount
+    handleInitialSection();
+
+    // Add scroll listener for initial section
+    window.addEventListener("scroll", handleInitialSection);
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("scroll", handleInitialSection);
+    };
   }, []);
 
   useEffect(() => {

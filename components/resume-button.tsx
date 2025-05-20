@@ -23,8 +23,7 @@ export default function ResumeButton() {
 
       // Create a link element and trigger download
       const link = document.createElement("a");
-      link.href =
-        "https://github.com/abhinay03/portfolioo/blob/main/public/Abhinay-Sambherao-Resume.pdf"; // This would be your actual resume PDF path
+      link.href = "/Abhinay-Sambherao-Resume.pdf"; // Direct path to the PDF in the public folder
       link.download = "Abhinay-Sambherao-Resume.pdf";
       document.body.appendChild(link);
       link.click();
