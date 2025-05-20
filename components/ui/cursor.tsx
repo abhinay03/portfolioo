@@ -6,12 +6,15 @@ import { motion } from "framer-motion";
 export default function CustomCursor() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState(true); // Start with true to prevent flash on mobile
 
   useEffect(() => {
-    // Check if device is mobile
+    // Check if device is mobile or touch device
     const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768); // 768px is typical tablet/mobile breakpoint
+      const isTouchDevice =
+        "ontouchstart" in window || navigator.maxTouchPoints > 0;
+      const isSmallScreen = window.innerWidth < 768;
+      setIsMobile(isTouchDevice || isSmallScreen);
     };
 
     // Initial check
@@ -20,20 +23,20 @@ export default function CustomCursor() {
     // Add resize listener
     window.addEventListener("resize", checkMobile);
 
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
-    };
-
-    const handleMouseEnter = () => {
-      setIsHovering(true);
-    };
-
-    const handleMouseLeave = () => {
-      setIsHovering(false);
-    };
-
-    // Only add mouse event listeners if not mobile
+    // Only proceed with cursor setup if not mobile
     if (!isMobile) {
+      const handleMouseMove = (e: MouseEvent) => {
+        setMousePosition({ x: e.clientX, y: e.clientY });
+      };
+
+      const handleMouseEnter = () => {
+        setIsHovering(true);
+      };
+
+      const handleMouseLeave = () => {
+        setIsHovering(false);
+      };
+
       // Add event listeners for links and buttons
       const interactiveElements = document.querySelectorAll(
         "a, button, [role='button']"
@@ -44,20 +47,18 @@ export default function CustomCursor() {
       });
 
       window.addEventListener("mousemove", handleMouseMove);
-    }
 
-    return () => {
-      window.removeEventListener("resize", checkMobile);
-      if (!isMobile) {
+      return () => {
         window.removeEventListener("mousemove", handleMouseMove);
-        const interactiveElements = document.querySelectorAll(
-          "a, button, [role='button']"
-        );
         interactiveElements.forEach((element) => {
           element.removeEventListener("mouseenter", handleMouseEnter);
           element.removeEventListener("mouseleave", handleMouseLeave);
         });
-      }
+      };
+    }
+
+    return () => {
+      window.removeEventListener("resize", checkMobile);
     };
   }, [isMobile]);
 
