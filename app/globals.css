@@ -47,6 +47,28 @@
     --input: 217.2 32.6% 17.5%;
     --ring: 224.3 76.3% 48%;
   }
+
+  .black {
+    --background: 0 0% 0%;
+    --foreground: 0 0% 100%;
+    --card: 0 0% 0%;
+    --card-foreground: 0 0% 100%;
+    --popover: 0 0% 0%;
+    --popover-foreground: 0 0% 100%;
+    --primary: 217.2 91.2% 59.8%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 0 0% 10%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 0 0% 10%;
+    --muted-foreground: 0 0% 70%;
+    --accent: 0 0% 10%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 0 0% 10%;
+    --input: 0 0% 10%;
+    --ring: 224.3 76.3% 48%;
+  }
 }
 
 @layer base {
@@ -65,6 +87,11 @@
 /* Add this to improve dark mode readability */
 .dark .text-muted-foreground {
   color: hsl(215 20.2% 75.1%);
+}
+
+/* Add this to improve black mode readability */
+.black .text-muted-foreground {
+  color: hsl(0 0% 70%);
 }
 
 /* Add this for animated gradient backgrounds */
